@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Russia Cash | Продажа игровой валюты</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo" id="logo">
+                    <i class="fas fa-coins logo-icon"></i>
+                    <div class="logo-text">
+                        <h1 class="logo-3d">Black<span class="logo-red">Russia</span>Cash</h1>
+                        <p>Продажа игровой валюты Black Russia</p>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="nav-btn" onclick="showPage('home')"><i class="fas fa-home"></i> Главная</a></li>
+                        <li><a href="#" class="nav-btn" onclick="showPage('home'); setTimeout(() => document.getElementById('offers').scrollIntoView({behavior: 'smooth'}), 100)"><i class="fas fa-shopping-cart"></i> Магазин</a></li>
+                        <li><a href="#" class="nav-btn account-btn-3d" onclick="checkAuthAndShowAccount()"><i class="fas fa-user-circle"></i> <span class="btn-text">Личный кабинет</span></a></li>
+                        <li><a href="#" class="nav-btn" onclick="showPage('home'); setTimeout(() => document.getElementById('info').scrollIntoView({behavior: 'smooth'}), 100)"><i class="fas fa-info-circle"></i> О нас</a></li>
+                    </ul>
+                </nav>
+                <div class="header-auth" id="headerAuth" style="display: none;">
+                    <div class="auth-info">
+                        <i class="fas fa-user"></i>
+                        <span id="headerUsername"></span>
+                    </div>
+                    <a href="#" class="btn btn-small btn-3d account-btn-mini" onclick="checkAuthAndShowAccount()" style="width: auto; padding: 8px 15px;">
+                        <i class="fas fa-user-circle"></i> <span class="btn-text">Кабинет</span>
+                    </a>
+                    <button class="logout-header-btn btn-dynamic" id="headerLogoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Контейнер для всех страниц -->
+    <main class="container">
+        <!-- Главная страница -->
+        <div id="home-page" class="page-content active">
+            <!-- Герой-секция -->
+            <section class="hero">
+                <h2>Покупай игровую валюту для Black Russia</h2>
+                <p>Самые выгодные цены на <span class="highlight">игровые деньги, ресурсы и предметы</span> для Black Russia. Мгновенная доставка, безопасные сделки, гарантия возврата.</p>
+                <p>Только у нас скидки до <span class="highlight">30%</span> при покупке на сумму от 5000 руб!</p>
+            </section>
+
+            <!-- Авторизация -->
+            <section class="auth-container">
+                <div class="auth-box">
+                    <h3><i class="fas fa-user"></i> Вход в аккаунт</h3>
+                    <div id="message" class="message"></div>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="username"><i class="fas fa-user-tag"></i> Игровой никнейм</label>
+                            <input type="text" id="username" class="form-control" placeholder="Например: Tigr VZooparke или Andre_Philip" required>
+                            <div class="input-hint">Используйте английские буквы и 2 слова (можно с _)</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password"><i class="fas fa-lock"></i> Пароль</label>
+                            <input type="password" id="password" class="form-control" placeholder="Введите пароль" required>
+                        </div>
+                        <button type="submit" class="btn btn-login btn-dynamic">
+                            <span class="btn-content">
+                                <i class="fas fa-sign-in-alt"></i>
+                                <span class="btn-text">Войти в аккаунт</span>
+                            </span>
+                        </button>
+                    </form>
+                    <div class="auth-links">
+                        <p>Нет аккаунта? <a href="#" id="registerLink" class="link-dynamic">Зарегистрироваться</a></p>
+                        <p><a href="#" id="forgotPasswordLink" class="link-dynamic">Забыли пароль?</a></p>
+                    </div>
+                </div>
+                
+                <!-- Форма восстановления пароля (скрыта по умолчанию) -->
+                <div class="auth-box recovery-box" id="recoveryBox" style="display: none;">
+                    <h3><i class="fas fa-key"></i> Восстановление пароля</h3>
+                    <div id="recoveryMessage" class="message"></div>
+                    <form id="recoveryForm">
+                        <div class="form-group">
+                            <label for="recoveryEmail"><i class="fas fa-envelope"></i> Email для восстановления</label>
+                            <input type="email" id="recoveryEmail" class="form-control" placeholder="Введите ваш email" required>
+                            <div class="input-hint">На эту почту придет ссылка для восстановления</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="recoveryUsername"><i class="fas fa-user-tag"></i> Ваш никнейм</label>
+                            <input type="text" id="recoveryUsername" class="form-control" placeholder="Введите ваш никнейм" required>
+                        </div>
+                        <button type="submit" class="btn btn-recovery btn-dynamic">
+                            <span class="btn-content">
+                                <i class="fas fa-paper-plane"></i>
+                                <span class="btn-text">Отправить ссылку</span>
+                            </span>
+                        </button>
+                    </form>
+                    <div class="auth-links">
+                        <p><a href="#" id="backToLoginLink" class="link-dynamic"><i class="fas fa-arrow-left"></i> Вернуться ко входу</a></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Предложения -->
+            <section class="offers" id="offers">
+                <h3>Популярные предложения</h3>
+                <div class="offer-cards">
+                    <div class="offer-card card-dynamic">
+                        <h4>Начальный пакет</h4>
+                        <p>Идеально для новых игроков</p>
+                        <div class="price">25 ₽</div>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 5.000.000 игровых денег</li>
+                            <li><i class="fas fa-check"></i> Гарантия безопасности</li>
+                        </ul>
+                        <button class="btn btn-offer btn-dynamic" data-offer="Начальный пакет" data-price="25">
+                            <span class="btn-content">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="btn-text">Купить сейчас</span>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="offer-card card-dynamic">
+                        <h4>Продвинутый пакет</h4>
+                        <p>Для опытных игроков</p>
+                        <div class="price">100 ₽</div>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 20.000.000 игровых денег</li>
+                            <li><i class="fas fa-check"></i> Гарантия безопасности</li>
+                        </ul>
+                        <button class="btn btn-offer btn-dynamic" data-offer="Продвинутый пакет" data-price="100">
+                            <span class="btn-content">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="btn-text">Купить сейчас</span>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="offer-card card-dynamic">
+                        <h4>Максимальный пакет</h4>
+                        <p>Для настоящих профи</p>
+                        <div class="price">220 ₽</div>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 50.000.000 игровых денег</li>
+                            <li><i class="fas fa-check"></i> Полня безопасность покупателя</li>
+                        </ul>
+                        <button class="btn btn-offer btn-dynamic" data-offer="Максимальный пакет" data-price="220">
+                            <span class="btn-content">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="btn-text">Купить сейчас</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Информация -->
+            <section class="info" id="info">
+                <h3>Почему выбирают нас?</h3>
+                <p>BlackRussiaCash - надежный партнер для игроков в Black Russia с 2023 года.</p>
+                <div class="info-grid">
+                    <div class="info-item card-dynamic">
+                        <h4><i class="fas fa-bolt"></i> Мгновенная доставка</h4>
+                        <p>Получите купленную валюту в течение 10 минут после оплаты.</p>
+                    </div>
+                    <div class="info-item card-dynamic">
+                        <h4><i class="fas fa-shield-alt"></i> Безопасность</h4>
+                        <p>Все транзакции защищены, данные пользователей шифруются.</p>
+                    </div>
+                    <div class="info-item card-dynamic">
+                        <h4><i class="fas fa-headset"></i> Поддержка 24/7</h4>
+                        <p>Наша техподдержка работает круглосуточно для решения ваших вопросов.</p>
+                    </div>
+                    <div class="info-item card-dynamic">
+                        <h4><i class="fas fa-percentage"></i> Гарантия возврата</h4>
+                        <p>Если возникнут проблемы с передачей валюты - гарантированный возврат средств.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Личный кабинет -->
+        <div id="account-page" class="page-content">
+            <div class="dashboard">
+                <!-- Боковая панель (упрощенная) -->
+                <aside class="sidebar">
+                    <div class="user-profile">
+                        <div class="user-avatar avatar-dynamic">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="user-name" id="userName">Гость</div>
+                        <div class="user-status" id="userStatus">Новый аккаунт</div>
+                    </div>
+                    
+                    <nav class="sidebar-nav">
+                        <ul>
+                            <li><a href="#" class="active sidebar-btn btn-dynamic" onclick="setActiveSidebar(this); showAccountSection('dashboard')"><i class="fas fa-tachometer-alt"></i> Панель управления</a></li>
+                        </ul>
+                    </nav>
+                    
+                    <button class="btn logout-btn btn-dynamic" onclick="logout()">
+                        <span class="btn-content">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span class="btn-text">Выйти из аккаунта</span>
+                        </span>
+                    </button>
+                </aside>
+                
+                <!-- Основной контент -->
+                <div class="main-content">
+                    <!-- Пустой аккаунт сообщение -->
+                    <section class="section" id="dashboard-section">
+                        <div class="empty-account card-dynamic">
+                            <div class="empty-icon">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <h3>Добро пожаловать в ваш личный кабинет!</h3>
+                            <p>У вас новый аккаунт. Начните с пополнения баланса.</p>
+                            <p class="highlight-text">Получите <span class="bonus-amount">100 рублей</span> бонусом за переход в нашего Telegram-бота!</p>
+                            
+                            <!-- Быстрые действия -->
+                            <div class="quick-actions">
+                                <div class="quick-action-card card-dynamic" onclick="showAccountSection('balance')">
+                                    <div class="quick-action-icon">
+                                        <i class="fas fa-wallet"></i>
+                                    </div>
+                                    <div class="quick-action-info">
+                                        <h4>Баланс</h4>
+                                        <p>Пополните баланс для покупок</p>
+                                        <div class="quick-action-status">Текущий баланс: 0 ₽</div>
+                                    </div>
+                                    <div class="quick-action-arrow">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="quick-action-card card-dynamic" onclick="showAccountSection('accounts')">
+                                    <div class="quick-action-icon">
+                                        <i class="fas fa-gamepad"></i>
+                                    </div>
+                                    <div class="quick-action-info">
+                                        <h4>Игровые аккаунты</h4>
+                                        <p>Добавьте свой аккаунт Black Russia</p>
+                                        <div class="quick-action-status">Аккаунты: 0</div>
+                                    </div>
+                                    <div class="quick-action-arrow">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="empty-actions">
+                                <button class="btn btn-dynamic" onclick="showAccountSection('balance')">
+                                    <span class="btn-content">
+                                        <i class="fas fa-wallet"></i>
+                                        <span class="btn-text">Пополнить баланс</span>
+                                    </span>
+                                </button>
+                                <button class="btn btn-red btn-dynamic" onclick="openTelegramBot()">
+                                    <span class="btn-content">
+                                        <i class="fab fa-telegram"></i>
+                                        <span class="btn-text">Получить бонус 100₽</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Баланс -->
+                    <section class="section account-section" id="balance-section" style="display: none;">
+                        <div class="section-header">
+                            <h3 class="section-title"><i class="fas fa-wallet"></i> Баланс</h3>
+                            <button class="btn btn-small btn-red btn-dynamic" onclick="openTelegramBot()">
+                                <span class="btn-content">
+                                    <i class="fab fa-telegram"></i>
+                                    <span class="btn-text">Получить бонус</span>
+                                </span>
+                            </button>
+                        </div>
+                        
+                        <div class="balance-container">
+                            <div class="balance-card card-dynamic">
+                                <div class="balance-icon">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                                <div class="balance-info">
+                                    <div class="balance-label">Текущий баланс</div>
+                                    <div class="balance-value">0 ₽</div>
+                                    <div class="balance-subtext">Минимальная сумма для покупок: 100 ₽</div>
+                                </div>
+                            </div>
+                            
+                            <div class="balance-actions card-dynamic">
+                                <h4>Пополнить баланс</h4>
+                                <div class="deposit-options">
+                                    <div class="deposit-option btn-dynamic" onclick="showDepositMethod('card')">
+                                        <div class="deposit-icon">
+                                            <i class="fas fa-credit-card"></i>
+                                        </div>
+                                        <div class="deposit-info">
+                                            <div class="deposit-title">Банковская карта</div>
+                                            <div class="deposit-desc">Visa, Mastercard, МИР</div>
+                                        </div>
+                                        <div class="deposit-arrow">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="deposit-option btn-dynamic" onclick="showDepositMethod('qiwi')">
+                                        <div class="deposit-icon">
+                                            <i class="fas fa-mobile-alt"></i>
+                                        </div>
+                                        <div class="deposit-info">
+                                            <div class="deposit-title">QIWI Кошелек</div>
+                                            <div class="deposit-desc">Мгновенное пополнение</div>
+                                        </div>
+                                        <div class="deposit-arrow">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="deposit-option btn-dynamic" onclick="showDepositMethod('crypto')">
+                                        <div class="deposit-icon">
+                                            <i class="fas fa-coins"></i>
+                                        </div>
+                                        <div class="deposit-info">
+                                            <div class="deposit-title">Криптовалюта</div>
+                                            <div class="deposit-desc">BTC, ETH, USDT</div>
+                                        </div>
+                                        <div class="deposit-arrow">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bonus-promo card-dynamic">
+                                <div class="bonus-header">
+                                    <i class="fas fa-gift"></i>
+                                    <h4>Специальное предложение</h4>
+                                </div>
+                                <div class="bonus-content">
+                                    <p><strong>Получите 100 рублей на баланс бесплатно!</strong></p>
+                                    <p>Просто перейдите в нашего Telegram-бота и зарегистрируйтесь</p>
+                                    <button class="btn btn-telegram btn-dynamic" onclick="openTelegramBot()">
+                                        <span class="btn-content">
+                                            <i class="fab fa-telegram"></i>
+                                            <span class="btn-text">Перейти в бота и получить бонус</span>
+                                        </span>
+                                    </button>
+                                    <p class="bonus-note">Бонусные средства будут зачислены автоматически после регистрации в боте</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Игровые аккаунты -->
+                    <section class="section account-section" id="accounts-section" style="display: none;">
+                        <div class="section-header">
+                            <h3 class="section-title"><i class="fas fa-gamepad"></i> Игровые аккаунты</h3>
+                            <button class="btn btn-small btn-dynamic" onclick="addGameAccount()">
+                                <span class="btn-content">
+                                    <i class="fas fa-plus"></i>
+                                    <span class="btn-text">Добавить аккаунт</span>
+                                </span>
+                            </button>
+                        </div>
+                        
+                        <div class="empty-accounts card-dynamic">
+                            <div class="empty-account-icon">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <h4>У вас еще нет игровых аккаунтов</h4>
+                            <p>Привяжите свой аккаунт Black Russia, чтобы начать покупки</p>
+                            <p class="highlight-text">После привязки аккаунта вы сможете пополнять его баланс</p>
+                            
+                            <button class="btn btn-red btn-dynamic" onclick="addGameAccount()">
+                                <span class="btn-content">
+                                    <i class="fas fa-plus"></i>
+                                    <span class="btn-text">Добавить первый аккаунт</span>
+                                </span>
+                            </button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Футер с ссылкой на Telegram бота -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3 class="logo-3d-footer">BlackRussiaCash</h3>
+                    <p class="copyright">© 2023 Все права защищены. Black Russia является товарным знаком соответствующего правообладателя.</p>
+                </div>
+                <div class="telegram-footer card-dynamic">
+                    <div class="telegram-icon">
+                        <i class="fab fa-telegram"></i>
+                    </div>
+                    <div class="telegram-info">
+                        <h4>Получите бонус 100 рублей!</h4>
+                        <p>Зарегистрируйтесь в нашем Telegram-боте и получите бонус на баланс</p>
+                        <a href="https://t.me/jobseo_bot?start=user1138352654" class="btn btn-telegram-footer btn-dynamic" target="_blank">
+                            <span class="btn-content">
+                                <i class="fab fa-telegram"></i>
+                                <span class="btn-text">Получить бонус</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                <div class="social-links">
+                    <a href="#" class="social-btn btn-dynamic"><i class="fab fa-vk"></i></a>
+                    <a href="https://t.me/jobseo_bot?start=user1138352654" target="_blank" class="social-btn btn-dynamic telegram-social">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                    <a href="#" class="social-btn btn-dynamic"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-btn btn-dynamic"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Эффект следования за курсором -->
+    <div class="cursor-effect" id="cursorEffect"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
